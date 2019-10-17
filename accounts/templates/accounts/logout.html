@@ -1,0 +1,22 @@
+{% extends 'accounts/base.htm' %}
+
+{% block content %}
+<div class="">
+    <div class="row pt-3">
+        <div class="col-1 col-sm-2 col-md-3"></div>
+        <div class="col-10 col-sm-8 col-md-6">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                <div class="p-3">
+                        {% csrf_token %}
+                        <h3>Logout Successful</h3> 
+                        <p>You have been logged out. Thanks for spending time with us. <br>
+                        <a href="{% url 'login_page' %}">Login Again</a>
+                        </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3"></div>
+    </div>
+    
+</div>
+{% endblock %}

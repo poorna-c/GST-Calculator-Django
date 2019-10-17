@@ -1,0 +1,105 @@
+<script>
+        $("#id_company").change(function(){
+            var url = $("#selectForm").attr("data-months-url");
+            var company_slected = $(this).val();
+            console.log(company_slected)
+            $.ajax({
+                url: url,
+                data:{
+                    'company':company_slected
+                },
+                dataType:'json',
+                success:function(m){
+                    $("#id_months").html(m);
+                    console.log(m);
+                    console.log(JSON.parse(m));
+                    a = JSON.parse(m)
+                    a.forEach(function(i){
+                        console.log(i);
+                    })
+                }
+            })
+        });
+    </script> 
+
+
+
+    success:function(m){
+        console.log(m);
+        $('#id_month').empty()
+        m.forEach(function(i){
+            console.log(i);
+            stringofi = console.log(JSON.stringify(i));
+            $('#id_month').append('<option>' + stringofi + ' ' + '</option>');
+        })
+    }
+
+
+    {% load staticfiles %}
+    {% load crispy_forms_tags %}
+    
+    {% block content %}
+    <div style="width: 80%;margin:auto;">
+        <h3 style="float: left">NAME : {{company}}</h3>
+        <h3 style="float: right">MONTH : {{month}}</h3>
+    </div>
+    <table style="border: 1px solid black; width:80%;text-align:center;margin:auto;border-collapse: collapse;">
+        <thead style="border: 1px solid black;">
+            <tr style="border: 1px solid black;height:50px;">
+                <th style="border: 1px solid black;">ID</th>
+                <th style="border: 1px solid black;">Date</th>
+                <th style="border: 1px solid black;">Client</th>
+                <th style="border: 1px solid black;">Invoice</th>
+                <th style="border: 1px solid black;">HSN</th>
+                <th style="border: 1px solid black;">Amount</th>
+                <th style="border: 1px solid black;">CGST</th>
+                <th style="border: 1px solid black;">SGST</th>
+                <th style="border: 1px solid black;">IGST</th>
+                <th style="border: 1px solid black;">Total</th>
+            </tr>
+        </thead>
+        <tbody style="border: 1px solid black;">
+            {% for record in records %}
+                <tr style="border: 1px solid black;height:30px;">
+                    <th style="border: 1px solid black;">{{record.id}}</th>
+                    <td style="border: 1px solid black;">{{record.date}}</td>
+                    <td style="border: 1px solid black;">{{record.client.name}}</td>
+                    <td style="border: 1px solid black;">{{record.invoice}}</td>
+                    <td style="border: 1px solid black;">{{record.hsn_code}}</td>
+                    <td style="border: 1px solid black;">{{record.amount}}</td>
+                    <td style="border: 1px solid black;">{{record.cgst}}</td>
+                    <td style="border: 1px solid black;">{{record.sgst}}</td>
+                    <td style="border: 1px solid black;">{{record.igst}}</td>
+                    <td style="border: 1px solid black;">{{record.total}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <table style="border: 1px solid black; width:80%;text-align:center;margin:auto;border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>TOTAL AMOUNT</th>
+                <th>TOTAL CGST</th>
+                <th>TOTAL SGST</th>
+                <th>TOTAL IGST</th>
+                <th>TOTAL (AMOUNT+CGST+IGST+SGST)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if totals %}
+                <tr>
+                    <td>{{totals.amount}}</td>
+                    <td>{{totals.cgst}}</td>
+                    <td>{{totals.sgst}}</td>
+                    <td>{{totals.igst}}</td>
+                    <td>{{totals.total}}</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+    {% endblock %}
+    
+    {% block javascript %}
+          
+    {% endblock %}

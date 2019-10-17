@@ -1,0 +1,158 @@
+{% extends 'application/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row my-3">
+        <div class="col-11 m-auto">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-lg-3">
+                        <h2>Insert</h2>
+                        <form action="" method="GET">
+                            <div class="input-group my-3">
+                                <input type="text" class="form-control" placeholder="Enter ID" name="rid">
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="submit">Get</button>
+                                </div>
+                            </div>
+                        </form>
+                        <form action="" method="POST" id = "MainForm">
+                            {% csrf_token %}
+                            
+                            {{form | crispy}}
+
+                            <div class="btn-group btn-block">
+                                <button type="button" onclick="compute()" class="btn btn-warning">Compute</button>
+                                <a href="{% url 'insert_page' %}" class="btn btn-secondary">New Record</a>
+                                
+                            </div>
+                            <div class="btn-group btn-block">
+                                <button type="submit" onclick="compute()" class="btn btn-success" name="insert" value="insert">Insert</button>
+                                <button type="submit" onclick="compute()" class="btn btn-info" name="update" value="update">Update</button>
+                                <button type="submit" class="btn btn-danger" name="delete" value="delete">Delete</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-sm-12 col-lg-9 pt-3">
+                        <div class="my-3">
+                        <a href="{% url 'print_page' %}" target="_blank" class="btn btn-info float-right mr-5">Print</a>
+                        <label for="" class="">Avaliable Records : {{avaliable_records}}</label>
+                        </div>
+                        <table class="table table-bordered table-responsive-xl table-hover table-wrapper-scroll-y my-custom-scrollbar">
+                            <thead>
+                                <tr class="table-info">
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Client</th>
+                                    <th scope="col">Invoice</th>
+                                    <th scope="col">HSN</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">CGST</th>
+                                    <th scope="col">SGST</th>
+                                    <th scope="col">IGST</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for record in records %}
+                                    <tr class="table-info">
+                                        <th scope="row">{{record.id}}</th>
+                                        <td>{{record.date}}</td>
+                                        <td>{{record.client.name}}</td>
+                                        <td>{{record.invoice}}</td>
+                                        <td>{{record.hsn_code}}</td>
+                                        <td>{{record.amount}}</td>
+                                        <td>{{record.cgst}}</td>
+                                        <td>{{record.sgst}}</td>
+                                        <td>{{record.igst}}</td>
+                                        <td>{{record.total}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2"></div>
+                        <div class="col-md-9">
+                            <table class="table table-bordered table-responsive-xl table-hover table-wrapper-scroll-y">
+                                <thead>
+                                    <tr>
+                                        <th>TOTAL AMOUNT</th>
+                                        <th>TOTAL CGST</th>
+                                        <th>TOTAL SGST</th>
+                                        <th>TOTAL IGST</th>
+                                        <th>TOTAL (AMOUNT+CGST+IGST+SGST)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if totals %}
+                                        <tr>
+                                            <td>{{totals.amount}}</td>
+                                            <td>{{totals.cgst}}</td>
+                                            <td>{{totals.sgst}}</td>
+                                            <td>{{totals.igst}}</td>
+                                            <td>{{totals.total}}</td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+        </div>
+        <!--One Column Removed Here-->
+    </div>
+    
+<script type="text/javascript">
+    function compute(){
+        amount = document.getElementById('id_amount').value;
+        selected_client = document.getElementById('id_client').value;
+        required_client_gst_data = 0;
+        ourclientDICT = "{{clients_details}}";
+        ourclientDICT = ourclientDICT.split(";,");
+        for(var i=0;i<ourclientDICT.length;i++)
+        {
+            ourclientDICT[i] = ourclientDICT[i].replace(/&#39/g,"");
+            ourclientDICT[i] = ourclientDICT[i].replace(/;/g,"");
+            ourclientDICT[i] = ourclientDICT[i].replace(/{/g,"");
+            ourclientDICT[i] = ourclientDICT[i].replace(/}/g,"");
+            ourclientDICT[i] = ourclientDICT[i].replace(/ /g,"");
+        }
+        for(var i=0;i<ourclientDICT.length;i++)
+        {
+            splitted_Data = ourclientDICT[i].split(":");
+            if(splitted_Data[0] == selected_client)
+            {
+                required_client_gst_data = splitted_Data[1];
+                break;
+            }
+        }
+        percentage = document.getElementById('id_percentage').value;
+        percent = percentage/100;
+        cgst = document.getElementById('id_cgst');
+        sgst = document.getElementById('id_sgst');
+        igst = document.getElementById('id_igst');
+        total = document.getElementById('id_total');
+        if(required_client_gst_data === "36"){
+			document.getElementById('id_percentage').value=2.5;
+			percent = 2.5/100;
+            igst.value = 0;
+            cgst.value = (percent * amount).toFixed(2);
+            sgst.value = (percent * amount).toFixed(2);
+        }
+        else{
+            cgst.value = 0;
+            sgst.value = 0;
+            igst.value = (percent * amount).toFixed(2);
+        }
+        c = parseFloat(cgst.value);
+        s = parseFloat(sgst.value);
+        i = parseFloat(igst.value);
+        amount = parseFloat(amount);
+        total.value =  c+s+i+amount;
+    };
+</script>
+    
+{% endblock %}

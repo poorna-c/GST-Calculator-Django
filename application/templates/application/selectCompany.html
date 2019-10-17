@@ -1,0 +1,33 @@
+{% extends 'application/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row my-3">
+        <div class="col-1 col-sm-1 col-lg-4"></div>
+        <div class="col-10 col-sm-10 col-lg-4">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Select Company</h2>
+                            <form action="{% url 'select_company_page' %}" method="POST" class="form-group" id="selectForm">
+                                {% csrf_token %}
+                                <select name="company_select" id="id_company" class="form-control my-3">
+                                    <option value="None">Select One</option>
+                                    {% for company in user_companies %}
+                                        <option value="{{company.id}}">{{company.name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="float-right btn btn-success">Select</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-1 col-sm-1 col-lg-4"></div>
+    </div>
+  
+{% endblock %}
+
+{% block javascript %}
+      
+{% endblock %}

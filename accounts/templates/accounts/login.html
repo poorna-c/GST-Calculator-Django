@@ -1,0 +1,27 @@
+{% extends 'accounts/base.htm' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="">
+    <div class="row pt-3">
+        <div class="col-1 col-sm-2 col-md-3"></div>
+        <div class="col-10 col-sm-8 col-md-6">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                <div class="p-3">
+                    <form action="" method="POST" autocomplete="off"> 
+                        {% csrf_token %}
+                        <h1>Login</h1> 
+                        {{form|crispy}}
+                        <label class="ml-3">Need an Account? <a href="{% url 'register_page' %}">Register</a></label>
+                        <button class="btn btn-outline-success float-right">Login</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 col-sm-2 col-md-3"></div>
+    </div>
+    
+</div>
+{% endblock %}

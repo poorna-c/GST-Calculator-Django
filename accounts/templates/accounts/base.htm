@@ -1,0 +1,103 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+        <title>{{title}}</title>
+    {% else %}
+        <title>Login</title>
+    {% endif %}
+    
+    
+    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <style type="text/css">
+        .applyback{
+            background-size: cover;
+            background-image: url("{% static 'images/maincover9.jpg' %}");
+            background-repeat: no-repeat;
+            background-position: fixed;
+            overflow-x: hidden;
+            /*background: #43BE31; rgb(21, 204, 118);*/
+        }
+        .height{
+            min-height: 80.8vh;
+        }
+        .special-card {
+              background-color: rgba(0, 0, 0, 1);
+              opacity: 0.9;
+            }
+        .bl{
+            background-color: rgba(134, 201, 146, 0.856);
+        }
+    </style>
+
+</head>
+<body class="bl" style="overflow-x: hidden">
+    <!--Header Start Here-->
+    <header>
+        <!-- Navbar Start here -->
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+            <a href="{% url 'home_page' %}" class="navbar navbar-brand">GST CALCULATOR</a>
+            
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#NAVBAR">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="NAVBAR">
+                    <ul class="nav navbar-nav mr-auto">
+                        <li class="nav-item"><a href="{% url 'select_company_page' %}" class="nav-link">Select Company</a></li>                      
+                        <li class="nav-item"><a href="{% url 'select_month_page' %}" class="nav-link">Select Month</a></li> 
+                        <li class="nav-item"><a href="{% url 'insert_page' %}" class="nav-link">Insert</a></li>                      
+                        <li class="nav-item"><a href="{% url 'add_client_page' %}" class="nav-link">Add Client</a></li>
+                        <li class="nav-item"><a href="{% url 'delete_client_page' %}" class="nav-link">Delete Client</a></li>
+                        <li class="nav-item"><a href="{% url 'add_month_page' %}" class="nav-link">Add Month</a></li>
+                        <li class="nav-item"><a href="{% url 'add_company_page' %}" class="nav-link">Add Company</a></li>
+                        
+                    </ul>
+                    <ul class="nav navbar-nav ml-auto">
+                        {% if user.is_authenticated %}
+                            <li class="nav-item"><a href="{% url 'profile_page' %}" class="nav-link">Profile</a></li>
+                            <li class="nav-item"><a href="{% url 'logout_page' %}" class="nav-link active">Not {{user.username}}? Logout</a></li>
+                        {% else %}
+                            <li class="nav-item"><a href="{% url 'register_page' %}" class="nav-link">Register</a></li>
+                            <li class="nav-item"><a href="{% url 'login_page' %}" class="nav-link">Login</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar end here -->
+    </header>
+    <!--Header End Here-->
+    <div class="row mt-3">
+        <div class="col-8 m-auto">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}"> 
+                        {{message}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <section class="height">
+    {% block content %}
+        
+    {% endblock %}
+</section>
+    <footer class="page-footer bg-dark text-white">
+        <div class="footer-copyright text-center py-3">© 2019 Copyright:
+            <a href="https://www.linkedin.com/in/vpc/" target="blank" class="text-white"> Poorna Chand</a>
+        </div>
+    </footer>
+    <script src="{% static 'js/bootstrapjqurey.js' %}"></script>
+    <script src="{% static 'js/proper.js' %}"></script>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'application/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="row my-3">
+        <div class="col-1 col-sm-1 col-lg-4"></div>
+        <div class="col-10 col-sm-10 col-lg-4">
+                <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                    <div class="row">
+                        <div class="col">
+                            <h2>Add Client</h2>
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {{form | crispy}}
+                                <button type="submit" class="float-right btn btn-success">Add Client</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="col-1 col-sm-1 col-lg-4"></div>
+    </div>
+    
+    
+{% endblock %}

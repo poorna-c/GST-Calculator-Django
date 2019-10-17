@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% if title %}
+        <title>{{title}}</title>
+    {% else %}
+        <title>Application</title>
+    {% endif %}
+
+    <style type="text/css">
+        .height{
+            min-height: 76.1vh;
+        }
+        table{
+            width: 80%;
+            margin: auto;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        tr{
+            height: 30px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+          }
+        .details{
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <section class="height">
+    {% block content %}
+        
+    {% endblock %}
+    </section>
+    {% block javascript %}
+    
+    {% endblock %}
+</body>
+</html>

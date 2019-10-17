@@ -1,0 +1,82 @@
+{% extends 'accounts/base.htm' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="">
+    <div class="row pt-3">
+        <div class="col-1 "></div>
+        <div class="col-10 ">
+            <div class="shadow-lg p-3 mb-5 bg-white rounded overflow-hidden special-card">
+                <div class="p-2">
+                    <div class="content-section">
+                        <div class="media">
+                            <img src="{{user.profile.image.url}}" height="80px" width="80px" alt="User Image" class="rounded-circle account-img">
+                            <div class="media-body pl-3">
+                                <h2 class="account-heading">{{user.username}}</h2>
+                                <p class="text-secondary">{{user.email}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--Profile Row Starts Here-->
+                <div class="container">
+                    <form action="{% url 'profile_page' %}" method="POST">
+                        {% csrf_token %}
+                    <div class="row form-group">
+                        <div class="col-3">
+                            <label for="">First name:</label>
+                            <input type="text" name="ff" id="" class="form-control mb-3 " value="{{user.first_name}}">
+                            <label for="">Date of birth:</label>
+                            <input type="date" name="" id="" class="form-control mb-3" value="19-12-1999">
+                            <label for="">Mobile:</label>
+                            <input type="text" name="" id="" class="form-control mb-3" value="{{user.profile.phone_number}}">
+                            
+                        </div>
+                        <div class="col-3">
+                            <label for="">Last name:</label>
+                            <input type="text" name="" id="" class="form-control mb-3" value="{{user.last_name}}">
+                            <label for="">Gender:</label>
+                            <select name="" id="" class="form-control mb-3" value="{{user.profile.gender}}">
+                                <option value="M">Male</option>
+                                <option value="F">Female</option>
+                            </select>
+                            <label for="">Alternate Mobile:</label>
+                            <input type="text" name="" id="" class="form-control mb-3" value="{{user.profile}}">
+                            
+                            
+                        </div>
+                        <div class="col-6">
+                            <label for="">Bio:</label>
+                            <textarea name="" id="BioField" cols="30" rows="8" class="form-control mb-3" ></textarea>
+                        </div>
+                        
+                    </div>
+                    <!--Profile Row Ends Here-->
+                    <div class="row form-group">
+                        <div class="col-4">
+                            <label for="">Website:</label>
+                            <input type="url" name="" id="" class="form-control mb-3" value="{{user.profile.website}}">
+                        </div>
+                        <div class="col-4">
+                                <label for="">Github:</label>
+                                <input type="url" name="" id="" class="form-control mb-3" value="{{user.profile.github}}">
+                        </div>
+                        <div class="col-4">
+                                <label for="">Linked in:</label>
+                                <input type="url" name="" id="" class="form-control mb-3" value="{{user.profile.linked_in}}">
+                        </div>
+                    </div>
+                    <input type="submit" name="" id="" value="Update" class="btn btn-success">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-1 "></div>
+    </div>
+    
+</div>
+<script type="text/javascript">
+    document.getElementById('BioField').innerHTML = '{{user.profile.bio}}'
+</script>
+{% endblock %}

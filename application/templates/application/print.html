@@ -1,0 +1,72 @@
+{% extends 'application/stylingtable.html'%}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="details">
+    <button style="float: right;padding:5px 20px;" onclick="window.print()">Print</button>
+    <a href="{% url 'insert_page' %}"><button style="float: right;padding:5px 20px;">Back</button></a>
+    <h3>NAME : {{company}}</h3>
+    <h3>MONTH : {{month}}</h3>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Date</th>
+            <th>Client</th>
+			<th>GSTNO</th>
+            <th>Invoice</th>
+            <th>HSN</th>
+            <th>Amount</th>
+            <th>CGST</th>
+            <th>SGST</th>
+            <th>IGST</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for record in records %}
+            <tr>
+                <th>{{record.id}}</th>
+                <td>{{record.date}}</td>
+                <td>{{record.client.name}}</td>
+				<td>{{record.client.gst_no}}</td>
+                <td>{{record.invoice}}</td>
+                <td>{{record.hsn_code}}</td>
+                <td>{{record.amount}}</td>
+                <td>{{record.cgst}}</td>
+                <td>{{record.sgst}}</td>
+                <td>{{record.igst}}</td>
+                <td>{{record.total}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<table>
+    <thead>
+        <tr>
+            <th>TOTAL AMOUNT</th>
+            <th>TOTAL CGST</th>
+            <th>TOTAL SGST</th>
+            <th>TOTAL IGST</th>
+            <th>TOTAL (AMOUNT+CGST+IGST+SGST)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if totals %}
+            <tr>
+                <td>{{totals.amount}}</td>
+                <td>{{totals.cgst}}</td>
+                <td>{{totals.sgst}}</td>
+                <td>{{totals.igst}}</td>
+                <td>{{totals.total}}</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table>
+{% endblock %}
+
+{% block javascript %}
+      
+{% endblock %}

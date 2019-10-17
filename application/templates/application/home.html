@@ -1,0 +1,9 @@
+<h1>This page is under construction...</h1>
+<h3 id="1">You will be redirectd in 3 seconds...</h3>
+<p>Contributions to this site is allowed. Contact the Site Owner for more details.</p>
+<p>If not redirecting...<a href="{% url 'insert_page' %}">Click Here</a></p>
+<script>
+    var timer = setTimeout(function() {
+        window.location="{% url 'insert_page' %}"
+    }, 3000);
+</script>
