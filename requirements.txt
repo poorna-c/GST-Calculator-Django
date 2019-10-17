@@ -1,0 +1,14 @@
+gunicorn==19.9.0
+Django==2.2.1
+django-crispy-forms==1.7.2
+django-phonenumber-field==3.0.1
+future==0.18.0
+Jinja2==2.10.1
+phonenumbers==8.10.17
+Pillow==6.0.0
+psycopg2==2.8.2
+pylint==2.3.1
+pyparsing==2.4.0
+python-dateutil==2.8.0
+pytz==2019.1
+sqlparse==0.3.0
